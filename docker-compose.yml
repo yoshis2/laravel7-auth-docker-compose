@@ -7,6 +7,8 @@ services:
       dockerfile: docker/php/Dockerfile
     volumes:
       - .:/var/www/html:z
+      - ./docker/php/logs:/var/log/php
+      - ./docker/php/php.ini:/usr/local/etc/php/php.ini
     links:
       - database
     depends_on:
@@ -22,6 +24,12 @@ services:
       - web-app
     depends_on:
       - web-app
+  node:
+    container_name: node
+    image: node:13-alpine
+    volumes:
+      - .:/work
+    working_dir: /work
   database:
     image: mysql:8
     container_name: database
@@ -40,7 +48,7 @@ services:
     image: redis:latest
     container_name: redis
     ports:
-      - "6379:6379"
+      - "16379:6379"
     volumes:
     - ./docker/redis/misc/data:/data
     - ./docker/redis/redis.conf:/usr/local/etc/redis/redis.conf

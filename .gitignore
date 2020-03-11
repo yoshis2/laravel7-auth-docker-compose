@@ -3,6 +3,11 @@
 /public/storage
 /storage/*.key
 /vendor
+/docker/nginx/logs/access.log
+/docker/nginx/logs/error.log
+/docker/mysql/misc
+/docker/mysql/logs/mysql-*
+/docker/redis/misc
 .env
 .env.backup
 .phpunit.result.cache
@@ -10,5 +15,5 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
-/docker/mysql/misc
-/docker/redis/misc
+package-lock.json
+composer.lock
