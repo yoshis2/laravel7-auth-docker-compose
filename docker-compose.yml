@@ -28,8 +28,8 @@ services:
     container_name: node
     image: node:13-alpine
     volumes:
-      - .:/work
-    working_dir: /work
+      - .:/var/www/html:z
+    working_dir: /var/www/html
   database:
     image: mysql:8
     container_name: database

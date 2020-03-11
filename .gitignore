@@ -8,7 +8,6 @@
 /docker/mysql/misc
 /docker/mysql/logs/mysql-*
 /docker/redis/misc
-.env
 .env.backup
 .phpunit.result.cache
 Homestead.json
