@@ -1,0 +1,46 @@
+version: '3'
+services:
+  web-app:
+    container_name: web-app
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    volumes:
+      - .:/var/www/html:z
+    links:
+      - database
+    depends_on:
+    - database
+  web-server:
+    container_name: web-server
+    build: ./docker/nginx
+    ports:
+      - "82:80"
+    volumes:
+      - .:/var/www/html:z
+    links:
+      - web-app
+    depends_on:
+      - web-app
+  database:
+    image: mysql:8
+    container_name: database
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "53306:3306"
+    volumes:
+    - ./docker/mysql/logs:/var/log/mysql
+    - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+    - ./docker/mysql/misc/data:/var/lib/mysql
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes:
+    - ./docker/redis/misc/data:/data
+    - ./docker/redis/redis.conf:/usr/local/etc/redis/redis.conf
